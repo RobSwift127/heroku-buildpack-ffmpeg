@@ -4,9 +4,9 @@ Heroku buildpack for ffmpeg
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for using [ffmpeg](http://www.ffmpeg.org/) in your project.  
 It doesn't do anything else, so to actually compile your app you should use [heroku-buildpack-multi](https://github.com/ddollar/heroku-buildpack-multi) to combine it with a real buildpack.
 
-This is a static build of ffmpeg, with webm enabled:
+This is a static build of ffmpeg, with webm and h.264 enabled:
 
-    mkdir ffmpeg_sources
+    mkdir ~/ffmpeg_sources
     
     cd ~/ffmpeg_sources
     curl -L --silent http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz | tar xz
@@ -23,6 +23,14 @@ This is a static build of ffmpeg, with webm enabled:
     PATH="$HOME/bin:$PATH" make
     make install
     make clean
+
+    cd ~/ffmpeg_sources
+    curl -L --silent http://download.videolan.org/pub/x264/snapshots/last_x264.tar.bz2 | tar xjv
+    cd x264-snapshot*
+    PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static
+    PATH="$HOME/bin:$PATH" make
+    make install
+    make distclean
     
     cd ~/ffmpeg_sources
     curl -L --silent http://downloads.xiph.org/releases/ogg/libogg-1.3.0.tar.gz | tar xvz
@@ -60,9 +68,9 @@ This is a static build of ffmpeg, with webm enabled:
       --enable-gpl \
       --enable-libvorbis \
       --enable-libvpx \
+      --enable-libx264 \
       --enable-static \
       --disable-shared \
-      --disable-asm \
       --extra-libs=-static \
       --extra-cflags=--static \
       --enable-nonfree
