@@ -7,7 +7,7 @@ indent() {
 echo "-----> Install ffmpeg"
 BUILD_DIR=$1
 VENDOR_DIR="vendor"
-DOWNLOAD_URL="https://s3.amazonaws.com/dwnld-buildpack-binaries/ffmpeg.2.tar.gz"
+DOWNLOAD_URL="https://ffmpeg.org/releases/ffmpeg-4.0.2.tar.bz2"
 
 echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
 
